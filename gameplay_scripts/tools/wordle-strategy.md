@@ -1,6 +1,6 @@
-# Wordle Strategy
+# Wordle Game Strategy
 
-- The first guess can be useful to explore vowels
+- The first guess can be useful to explore vowels and common consonants
 - After the first guess, minimise guesses that are completely exploratory
 - When an incorrect letter is guessed, don't use it again
 - When a correct letter is guessed in the wrong place, subsequent guesses should include it in a different place
