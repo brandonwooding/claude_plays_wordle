@@ -34,13 +34,17 @@ async def main():
     # Close privacy modal
     wait = WebDriverWait(driver, 10)
 
-    button = wait.until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, "#fides-banner button.fides-accept-all-button")
+    try:
+        button = wait.until(
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, "#fides-banner button.fides-accept-all-button")
+            )
         )
-    )
 
-    button.click()
+        button.click()
+
+    except TimeoutException:
+        print("no 'privacy banner'")
 
     # Click Play
     button = wait.until(
