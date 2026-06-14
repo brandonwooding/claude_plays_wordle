@@ -1,0 +1,95 @@
+name: Daily Wordle
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      run_date: ${{ steps.date.outputs.run_date }}
+    steps:
+      - id: date
+        run: echo "run_date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+
+  play:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        model: ['claude-haiku-4-5', 'claude-sonnet-4-6', 'claude-opus-4-8']
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Install Python dependencies
+        run: pip install -r gameplay_scripts/requirements.txt
+
+      - name: Play Wordle
+        run: python gameplay_scripts/agents/wordle-agent/wordle-agent.py --model ${{ matrix.model }}
+
+      - name: Build game summary
+        run: python gameplay_scripts/tools/game-summary.py --model ${{ matrix.model }}
+
+      - name: Run strategy reflection
+        run: python gameplay_scripts/agents/reflection-agent/reflection-agent.py --model ${{ matrix.model }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wordle-data-${{ matrix.model }}
+          path: gameplay_scripts/data/${{ needs.setup.outputs.run_date }}/${{ matrix.model }}
+
+  build-database:
+    needs: [setup, play]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: wordle-data-*
+          path: gameplay_scripts/data/${{ needs.setup.outputs.run_date }}
+
+      - name: Flatten downloaded artifacts into per-model dirs
+        run: |
+          cd gameplay_scripts/data/${{ needs.setup.outputs.run_date }}
+          for d in wordle-data-*; do
+            model="${d#wordle-data-}"
+            mkdir -p "$model"
+            mv "$d"/* "$model"/
+            rmdir "$d"
+          done
+
+      - name: Rebuild database
+        run: python gameplay_scripts/database/build_database.py
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add gameplay_scripts/data gameplay_scripts/database/wordle_ai_database.db
+          git diff --cached --quiet || git commit -m "Daily Wordle results for ${{ needs.setup.outputs.run_date }}"
+          git push

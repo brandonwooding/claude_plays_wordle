@@ -1,4 +1,8 @@
 {
+  "game_outcome": {
+    "win": true,
+    "attempts": 3
+  },
   "plays": [
     {
       "thinking": "",

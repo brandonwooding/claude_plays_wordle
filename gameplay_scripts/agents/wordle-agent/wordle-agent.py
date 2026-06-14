@@ -1,10 +1,10 @@
 from gameplay_scripts.tools.browser_manager import BrowserManager
-from gameplay_scripts.tools.tools import make_wordle_tools, list_playable_words, serialize_message, get_log_name
+from gameplay_scripts.tools.tools import make_wordle_tools, list_playable_words, serialize_message
+from gameplay_scripts import paths
+import argparse
 import asyncio
 import json
-import os
 import frontmatter
-from datetime import datetime
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -22,6 +22,11 @@ from claude_agent_sdk import (
 
 
 async def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", required=True, help="Model id to play with, e.g. claude-sonnet-4-6")
+    args = parser.parse_args()
+    model = args.model
+
     # Open site
     driver = BrowserManager.get_driver()
     driver.get("https://www.nytimes.com/games/wordle")
@@ -60,26 +65,25 @@ async def main():
         print("no 'how to'")
 
     # Load word list
-    word_lookup = list_playable_words()
+    word_lookup = list_playable_words(paths.TOOLS_DIR / "valid-wordle-words.txt")
 
     # Load prompts
     # Main Agent
-    post = frontmatter.load("wordle-agent.md")
+    post = frontmatter.load(paths.WORDLE_AGENT_DIR / "wordle-agent.md")
     agent_details = post.metadata
     system_prompt = post.content
-    model = agent_details["model"]
 
     # Strategy Reviewer Sub Agent
-    strategy_reviewer_post = frontmatter.load("wordle-strategist.md")
+    strategy_reviewer_post = frontmatter.load(paths.REFLECTION_AGENT_DIR / "wordle-strategist.md")
     strategy_agent_details = strategy_reviewer_post.metadata
     strategy_agent_system_prompt = strategy_reviewer_post.content
 
-    with open("wordle-strategy.md") as f:
+    with open(paths.TOOLS_DIR / "wordle-strategy.md") as f:
         game_strategy = f.read()
 
     # Set log file
-    log_file = f"data/{datetime.today().strftime('%Y-%m-%d')}/{get_log_name(model_id=model)}"
-    os.makedirs(os.path.dirname(log_file), exist_ok=True)
+    run_dir = paths.get_run_dir(model_id=model, create=True)
+    log_file = run_dir / paths.get_log_filename(model_id=model)
 
     # MCP tools server
     server = create_sdk_mcp_server(

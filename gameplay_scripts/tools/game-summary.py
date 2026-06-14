@@ -1,3 +1,5 @@
+from gameplay_scripts import paths
+import argparse
 import json
 
 def load_run(path):
@@ -52,11 +54,27 @@ def build_summary(messages):
                 "tokens": d["usage"],
             }
 
-    return {"plays": plays, "usage": usage}
+    game_outcome = dict()
+
+    last_play = plays[-1]
+    last_result = json.loads(last_play["result"])
+
+    game_outcome["win"] = (
+        last_result["response"].startswith("Correct guess")
+        or last_play["result_details"] is None
+    )
+    game_outcome["attempts"] = len(plays)
+
+    return {"game_outcome": game_outcome, "plays": plays, "usage": usage}
 
 
 if __name__ == "__main__":
-    messages = load_run("data/2026-06-12/2026-06-12_claude-sonnet-4-6.jsonl")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", required=True, help="Model id used for the run, e.g. claude-sonnet-4-6")
+    args = parser.parse_args()
+
+    run_dir = paths.get_run_dir(model_id=args.model, create=True)
+    messages = load_run(run_dir / paths.get_log_filename(model_id=args.model))
     summary = build_summary(messages)
-    with open("data/2026-06-12/summary.json", "w") as file:
+    with open(run_dir / "summary.json", "w") as file:
         file.write(json.dumps(summary, indent=2))

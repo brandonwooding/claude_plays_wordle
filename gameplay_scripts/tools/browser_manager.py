@@ -18,6 +18,11 @@ class BrowserManager:
             options.add_argument("--window-size=1920x1080")
             # Point Selenium to this brand-new, empty folder
             options.add_argument(f"user-data-dir={cls._temp_dir}")
+
+            if os.environ.get("CI"):
+                options.add_argument("--headless=new")
+                options.add_argument("--no-sandbox")
+                options.add_argument("--disable-dev-shm-usage")
             
             cls._driver = selenium.webdriver.Chrome(options=options)
         return cls._driver

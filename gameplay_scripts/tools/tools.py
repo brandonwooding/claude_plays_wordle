@@ -6,17 +6,12 @@ from selenium.common.exceptions import TimeoutException
 from claude_agent_sdk import tool, create_sdk_mcp_server
 import json
 import dataclasses
-from datetime import datetime
 
 
 def format_dict_key(str):
     return str.replace(' ', '-').lower()
 
-def get_log_name(model_id, ext='.jsonl'):
-    date = datetime.today().strftime('%Y-%m-%d')
-    return date + '_' + model_id + ext
-
-def list_playable_words(filename="tools/valid-wordle-words.txt"):
+def list_playable_words(filename):
     with open(filename, "r") as f:
         word_list = f.read().splitlines()
         word_lookup = {word: True for word in word_list}
@@ -45,10 +40,14 @@ def get_game_toast_message(driver, timeout=5):
             )
         )
 
-        return toast.text.strip()
+        toast_message = toast.text.strip()
+        if toast_message in ["Genius", "Magnificent", "Impressive", "Splendid", "Great", "Phew"]:
+            return "Correct guess - " + toast_message
+        else:
+            return toast_message
     
     except TimeoutException:
-        return "play accepted"
+        return "Play accepted"
 
 def make_wordle_tools(driver, word_lookup):
 
