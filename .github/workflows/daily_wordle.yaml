@@ -61,6 +61,8 @@ jobs:
   build-database:
     needs: [setup, play]
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
 
