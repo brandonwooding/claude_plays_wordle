@@ -101,7 +101,7 @@ async def main():
         model=model,
         system_prompt=f"{system_prompt} \n {game_strategy}",
         mcp_servers={"wordle": server},
-        allowed_tools=["mcp__wordle__get_game_state", "mcp__wordle__play_Word"]
+        allowed_tools=["mcp__wordle__get_game_state", "mcp__wordle__play_word"]
     )
 
     # AGENT LOOP
