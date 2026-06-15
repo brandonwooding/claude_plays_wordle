@@ -2,14 +2,22 @@ from gameplay_scripts import paths
 import argparse
 import json
 
+INVALID_WORD_MESSAGE = "Invalid word guessed - please guess a real 5-letter word"
+
 def load_run(path):
     with open(path) as f:
         return [json.loads(line) for line in f]
 
+def get_tool_result_text(block):
+    content = block["content"]
+    if isinstance(content, list):
+        return content[0]["text"]
+    return str(content)
+
 def build_summary(messages):
     plays = []
-    thinking_buffer = []
-    tool_id_map = {}  # tool_use_id -> (play_index, "result" | "result_details")
+    thinking = ""
+    tool_id_map = {}  # tool_use_id -> (play, "result" | "result_details")
     usage = None
 
     for d in messages:
@@ -17,34 +25,41 @@ def build_summary(messages):
             for block in d["content"]:
 
                 if block["_type"] == "ThinkingBlock":
-                    thinking_buffer.append(block["thinking"])
+                    thinking = block["thinking"]
+
+                elif block["_type"] == "TextBlock":
+                    thinking = block["text"]
 
                 elif block["_type"] == "ToolUseBlock":
                     if block["name"] == "mcp__wordle__play_word":
-                        plays.append({
-                            "thinking": "\n\n".join(thinking_buffer),
+                        play = {
+                            "thinking": thinking,
                             "guess": block["input"]["word"],
                             "result": None,
                             "result_details": None,
-                        })
-                        tool_id_map[block["id"]] = (len(plays) - 1, "result")
+                        }
+                        plays.append(play)
+                        tool_id_map[block["id"]] = (play, "result")
 
                     elif block["name"] == "mcp__wordle__get_game_state":
                         if plays:  # ignore any pre-game state checks
-                            tool_id_map[block["id"]] = (len(plays) - 1, "result_details")
+                            tool_id_map[block["id"]] = (plays[-1], "result_details")
 
-                    thinking_buffer = []
+                    thinking = ""
 
         elif d["_type"] == "UserMessage":
             for block in d["content"]:
                 if block["_type"] == "ToolResultBlock":
                     tool_use_id = block["tool_use_id"]
                     if tool_use_id in tool_id_map:
-                        content = block["content"]
-                        text = content[0]["text"] if isinstance(content, list) else str(content)
+                        text = get_tool_result_text(block)
 
-                        play_idx, field = tool_id_map[tool_use_id]
-                        plays[play_idx][field] = text
+                        play, field = tool_id_map[tool_use_id]
+                        if field == "result" and INVALID_WORD_MESSAGE in text:
+                            plays.remove(play)
+                            continue
+
+                        play[field] = text
 
         elif d["_type"] == "ResultMessage":
             usage = {

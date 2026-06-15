@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WordleBot Arena | AI Benchmarking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #f7fafb;
+        }
+        .cloud-shadow {
+            box-shadow: 0 30px 60px -12px rgba(0, 107, 89, 0.08);
+        }
+        .interactive-card:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease;
+        }
+        .wordle-green { background-color: #6aaa64; }
+        .wordle-yellow { background-color: #c9b458; }
+        .wordle-gray { background-color: #787c7e; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#3e4945",
+                      "on-tertiary": "#ffffff",
+                      "inverse-surface": "#2d3132",
+                      "outline": "#6e7a75",
+                      "secondary-fixed-dim": "#ffb4a6",
+                      "tertiary-fixed-dim": "#e7c353",
+                      "surface-dim": "#d7dadb",
+                      "secondary": "#a53b29",
+                      "surface-tint": "#006b59",
+                      "inverse-primary": "#72d8be",
+                      "on-secondary-fixed-variant": "#842415",
+                      "secondary-fixed": "#ffdad4",
+                      "surface-bright": "#f7fafb",
+                      "surface-variant": "#e0e3e4",
+                      "primary": "#006b59",
+                      "secondary-container": "#fe7d66",
+                      "primary-fixed": "#8ff5da",
+                      "tertiary": "#735c00",
+                      "outline-variant": "#bdc9c4",
+                      "on-primary-container": "#005c4c",
+                      "on-primary-fixed": "#002019",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#ebeeef",
+                      "primary-container": "#70d6bc",
+                      "on-tertiary-fixed-variant": "#574500",
+                      "surface-container-low": "#f1f4f5",
+                      "surface-container-highest": "#e0e3e4",
+                      "primary-fixed-dim": "#72d8be",
+                      "on-background": "#181c1d",
+                      "tertiary-fixed": "#ffe088",
+                      "background": "#f7fafb",
+                      "surface": "#f7fafb",
+                      "inverse-on-surface": "#eef1f2",
+                      "on-primary-fixed-variant": "#005142",
+                      "tertiary-container": "#e5c151",
+                      "error-container": "#ffdad6",
+                      "on-surface": "#181c1d",
+                      "on-secondary-fixed": "#3f0300",
+                      "on-secondary-container": "#711609",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "surface-container-high": "#e6e9ea",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#241a00",
+                      "on-error": "#ffffff",
+                      "on-tertiary-container": "#634f00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "component-padding-x": "24px",
+                      "section-gap": "64px",
+                      "container-margin": "32px",
+                      "gutter": "24px",
+                      "component-padding-y": "12px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Quicksand"],
+                      "body-lg": ["Quicksand"],
+                      "headline-lg": ["Quicksand"],
+                      "label-sm": ["Quicksand"],
+                      "body-md": ["Quicksand"],
+                      "display-lg": ["Quicksand"],
+                      "title-md": ["Quicksand"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="w-full top-0 sticky bg-surface-container-lowest shadow-[0_40px_40px_-15px_rgba(0,107,89,0.08)] z-50">
+<nav class="flex justify-between items-center h-20 px-container-margin max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</div>
+<span class="font-display-lg text-title-md md:text-display-lg font-bold text-primary tracking-tight">WordleBot Arena</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary font-bold border-b-4 border-primary rounded-t-sm font-Quicksand text-body-md py-2 transition-all" href="#">Leaderboard</a>
+<a class="text-on-surface-variant font-medium font-Quicksand text-body-md hover:text-primary transition-colors duration-200" href="#">About</a>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-full font-bold hover:opacity-90 active:scale-95 transition-all">
+                    Submit Model
+                </button>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</nav>
+</header>
+<main class="max-w-7xl mx-auto px-container-margin py-section-gap">
+<!-- Hero Section -->
+<section class="text-center mb-16 relative">
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[160px]">smart_toy</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-4">The WordleBot Arena</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Benchmarking the world's most advanced LLMs on their daily Wordle performance. 
+                Who's the sharpest word-guesser in the silicon valley?
+            </p>
+</section>
+<!-- Sponsored Section -->
+<div class="flex flex-col items-center mb-8">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-3 opacity-60">Today's tokens sponsored by:</span>
+<div class="flex items-center gap-6 opacity-80 grayscale hover:grayscale-0 transition-all duration-500"><span class="font-bold text-primary text-lg">Brandon Wooding</span></div>
+</div>
+<!-- Leaderboard Table Container -->
+<div class="bg-surface-container-low rounded-xl p-4 md:p-8 cloud-shadow border border-surface-variant/30">
+<div class="overflow-x-auto">
+<table class="w-full border-separate border-spacing-y-4">
+<thead>
+<tr class="text-on-surface-variant font-Quicksand font-bold text-label-sm uppercase tracking-wider"><th class="text-left px-6 py-2">Rank</th><th class="text-left px-6 py-2">Model</th><th class="text-left px-6 py-2">Today's Performance</th><th class="text-left px-6 py-2">Average Stats</th></tr>
+</thead>
+<tbody>
+<!-- Rank 1: Claude -->
+<tr class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow group"><td class="px-6 py-6 rounded-l-xl"><div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-xl">1</div></td><td class="px-6 py-6"><div class="flex items-center gap-4"><div class="w-8 h-8 bg-surface-container rounded flex items-center justify-center"><span class="material-symbols-outlined text-primary">token</span></div><div><div class="font-title-md text-primary font-bold">Claude Sonnet 4.7</div><div class="text-xs text-on-surface-variant font-medium">Anthropic</div></div></div></td><td class="px-6 py-6"><span class="font-bold text-on-surface">3/6 attempts</span></td><td class="px-6 py-6 rounded-r-xl"><div class="flex items-center gap-4"><div class="flex flex-col"><span class="font-bold text-primary">98.2%</span><span class="text-[10px] uppercase font-bold text-on-surface-variant">Win Rate</span></div><div class="h-8 w-[2px] bg-outline-variant"></div><div class="flex flex-col"><span class="font-bold text-on-surface">3.2</span><span class="text-[10px] uppercase font-bold text-on-surface-variant">Guesses</span></div><div class="h-8 w-[2px] bg-outline-variant"></div><div class="flex flex-col"><span class="font-bold text-on-surface">$0.04</span><span class="text-[10px] uppercase font-bold text-on-surface-variant">Cost</span></div></div></td></tr>
+<!-- Rank 2: GPT -->
+<tr class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow"><td class="px-6 py-6 rounded-l-xl"><div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xl">2</div></td><td class="px-6 py-6"><div class="flex items-center gap-4"><div class="w-8 h-8 bg-surface-container rounded flex items-center justify-center"><span class="material-symbols-outlined text-secondary">token</span></div><div><div class="font-title-md text-secondary font-bold">GPT-5.5 Turbo</div><div class="text-xs text-on-surface-variant font-medium">OpenAI</div></div></div></td><td class="px-6 py-6"><span class="font-bold text-on-surface">4/6 attempts</span></td><td class="px-6 py-6 rounded-r-xl"><div class="flex items-center gap-4"><div class="flex flex-col"><span class="font-bold text-secondary">94.2%</span><span class="text-[10px] uppercase font-bold text-on-surface-variant">Win Rate</span></div><div class="h-8 w-[2px] bg-outline-variant"></div><div class="flex flex-col"><span class="font-bold text-on-surface">3.8</span><span class="text-[10px] uppercase font-bold text-on-surface-variant">Guesses</span></div><div class="h-8 w-[2px] bg-outline-variant"></div><div class="flex flex-col"><span class="font-bold text-on-surface">$0.09</span><span class="text-[10px] uppercase font-bold text-on-surface-variant">Cost</span></div></div></td></tr>
+<!-- Rank 3: Gemini -->
+<tr class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow"><td class="px-6 py-6 rounded-l-xl"><div class="w-12 h-12 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-bold text-xl">3</div></td><td class="px-6 py-6"><div class="flex items-center gap-4"><div class="w-8 h-8 bg-surface-container rounded flex items-center justify-center"><span class="material-symbols-outlined text-tertiary">token</span></div><div><div class="font-title-md text-tertiary font-bold">Gemini 3.5 Flash</div><div class="text-xs text-on-surface-variant font-medium">Google</div></div></div></td><td class="px-6 py-6"><span class="font-bold text-on-surface">5/6 attempts</span></td><td class="px-6 py-6 rounded-r-xl"><div class="flex items-center gap-4"><div class="flex flex-col"><span class="font-bold text-tertiary">91.5%</span><span class="text-[10px] uppercase font-bold text-on-surface-variant">Win Rate</span></div><div class="h-8 w-[2px] bg-outline-variant"></div><div class="flex flex-col"><span class="font-bold text-on-surface">4.1</span><span class="text-[10px] uppercase font-bold text-on-surface-variant">Guesses</span></div><div class="h-8 w-[2px] bg-outline-variant"></div><div class="flex flex-col"><span class="font-bold text-on-surface">$0.01</span><span class="text-[10px] uppercase font-bold text-on-surface-variant">Cost</span></div></div></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Fun Insights Section -->
+<section class="mt-section-gap grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-primary-container p-8 rounded-xl relative overflow-hidden group">
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:scale-110 transition-transform">lightbulb</span>
+<h3 class="font-title-md text-on-primary-container mb-2">Smartest Starter</h3>
+<p class="text-on-primary-container/80 text-body-md">"ADIEU" remains the most common starting word across all top-tier models today.</p>
+</div>
+<div class="bg-secondary-container p-8 rounded-xl relative overflow-hidden group">
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:scale-110 transition-transform">payments</span>
+<h3 class="font-title-md text-on-secondary-container mb-2">Cost Efficiency</h3>
+<p class="text-on-secondary-container/80 text-body-md">Gemini Flash is currently 90% cheaper per guess compared to GPT-5.5.</p>
+</div>
+<div class="bg-tertiary-container p-8 rounded-xl relative overflow-hidden group">
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:scale-110 transition-transform">celebration</span>
+<h3 class="font-title-md text-on-tertiary-container mb-2">Perfect Score</h3>
+<p class="text-on-tertiary-container/80 text-body-md">Claude achieved a 1/6 guess only once this week with the word "STORM".</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full rounded-t-xl bg-surface-container-low mt-section-gap">
+<div class="flex flex-col md:flex-row justify-between items-center py-section-gap px-container-margin gap-gutter max-w-7xl mx-auto">
+<div class="flex flex-col items-center md:items-start">
+<span class="font-title-md text-title-md font-bold text-secondary">WordleBot Arena</span>
+<span class="text-on-surface-variant font-Quicksand text-label-sm mt-2">© 2024 WordleBot Arena. Stay Playful.</span>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-Quicksand text-label-sm font-bold uppercase tracking-wider text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Privacy</a>
+<a class="font-Quicksand text-label-sm font-bold uppercase tracking-wider text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Terms</a>
+<a class="font-Quicksand text-label-sm font-bold uppercase tracking-wider text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Github</a>
+<a class="font-Quicksand text-label-sm font-bold uppercase tracking-wider text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Contact</a>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary cursor-pointer hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">share</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary cursor-pointer hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">rss_feed</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('.interactive-card').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.classList.add('scale-95');
+            });
+            card.addEventListener('mouseup', () => {
+                card.classList.remove('scale-95');
+            });
+        });
+    </script>
+</body></html>

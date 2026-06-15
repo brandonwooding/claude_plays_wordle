@@ -82,7 +82,7 @@ async def main():
     strategy_agent_details = strategy_reviewer_post.metadata
     strategy_agent_system_prompt = strategy_reviewer_post.content
 
-    with open(paths.TOOLS_DIR / "wordle-strategy.md") as f:
+    with open(paths.get_strategy_path(model_id=model)) as f:
         game_strategy = f.read()
 
     # Set log file

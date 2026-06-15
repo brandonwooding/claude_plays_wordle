@@ -26,7 +26,7 @@ async def main():
         cwd=str(paths.REPO_ROOT)
     )
 
-    strategy_path = paths.TOOLS_DIR.relative_to(paths.REPO_ROOT) / "wordle-strategy.md"
+    strategy_path = paths.get_strategy_path(model_id=args.model).relative_to(paths.REPO_ROOT)
 
     review_prompt = f"""Here is the summary of the most recent game:
 

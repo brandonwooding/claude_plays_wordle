@@ -58,6 +58,11 @@ jobs:
           name: wordle-data-${{ matrix.model }}
           path: gameplay_scripts/data/${{ needs.setup.outputs.run_date }}/${{ matrix.model }}
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wordle-strategy-${{ matrix.model }}
+          path: gameplay_scripts/tools/model-strategy/${{ matrix.model }}
+
   build-database:
     needs: [setup, play]
     runs-on: ubuntu-latest
@@ -85,6 +90,21 @@ jobs:
             rmdir "$d"
           done
 
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: wordle-strategy-*
+          path: /tmp/model-strategy
+
+      - name: Restore reflected strategy files into the working tree
+        run: |
+          cd /tmp/model-strategy
+          for d in wordle-strategy-*; do
+            model="${d#wordle-strategy-}"
+            dest="$GITHUB_WORKSPACE/gameplay_scripts/tools/model-strategy/$model"
+            mkdir -p "$dest"
+            cp -r "$d"/* "$dest"/
+          done
+
       - name: Rebuild database
         run: python gameplay_scripts/database/build_database.py
 
@@ -92,6 +112,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add gameplay_scripts/data gameplay_scripts/database/wordle_ai_database.db
+          git add gameplay_scripts/data gameplay_scripts/database/wordle_ai_database.db gameplay_scripts/tools/model-strategy
           git diff --cached --quiet || git commit -m "Daily Wordle results for ${{ needs.setup.outputs.run_date }}"
           git push
