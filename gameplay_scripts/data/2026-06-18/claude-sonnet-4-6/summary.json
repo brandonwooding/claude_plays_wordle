@@ -1,0 +1,61 @@
+{
+  "game_outcome": {
+    "win": true,
+    "attempts": 3
+  },
+  "plays": [
+    {
+      "thinking": "The board is fresh \u2014 no guesses yet! Let me start with a strong opener.\n\n**Strategy:**\n- **Guess 1: CRANE** \u2014 covers common vowels (A, E) and high-frequency consonants (C, R, N)",
+      "guess": "CRANE",
+      "result": "{\"guess\": \"crane\", \"response\": \"Play accepted\"}",
+      "result_details": "{\"row-1\": {\"guess\": \"CRANE\", \"guess_outcome\": \"incorrect\", \"letter_tiles\": [{\"letter\": \"C\", \"state\": \"absent\", \"description\": \"1st letter, C, absent\"}, {\"letter\": \"R\", \"state\": \"present\", \"description\": \"2nd letter, R, present in another position\"}, {\"letter\": \"A\", \"state\": \"absent\", \"description\": \"3rd letter, A, absent\"}, {\"letter\": \"N\", \"state\": \"present\", \"description\": \"4th letter, N, present in another position\"}, {\"letter\": \"E\", \"state\": \"present\", \"description\": \"5th letter, E, present in another position\"}]}, \"row-2\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-3\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-4\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-5\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-6\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}}"
+    },
+    {
+      "thinking": "**Results from CRANE:**\n- \ud83d\udfe8 R \u2014 in the word, not position 2\n- \u2b1b A \u2014 absent\n- \ud83d\udfe8 N \u2014 in the word, not position 4\n- \ud83d\udfe8 E \u2014 in the word, not position 5\n- \u2b1b C \u2014 absent\n\n**Known:** Word contains R, N, E. No C or A.\n\n**Guess 2: STERN** \u2014 places R (pos 4), N (pos 5), E (pos 3) in new positions, and introduces high-frequency S and T.",
+      "guess": "STERN",
+      "result": "{\"guess\": \"stern\", \"response\": \"Play accepted\"}",
+      "result_details": "{\"row-1\": {\"guess\": \"CRANE\", \"guess_outcome\": \"incorrect\", \"letter_tiles\": [{\"letter\": \"C\", \"state\": \"absent\", \"description\": \"1st letter, C, absent\"}, {\"letter\": \"R\", \"state\": \"present\", \"description\": \"2nd letter, R, present in another position\"}, {\"letter\": \"A\", \"state\": \"absent\", \"description\": \"3rd letter, A, absent\"}, {\"letter\": \"N\", \"state\": \"present\", \"description\": \"4th letter, N, present in another position\"}, {\"letter\": \"E\", \"state\": \"present\", \"description\": \"5th letter, E, present in another position\"}]}, \"row-2\": {\"guess\": \"STERN\", \"guess_outcome\": \"partially correct\", \"letter_tiles\": [{\"letter\": \"S\", \"state\": \"absent\", \"description\": \"1st letter, S, absent\"}, {\"letter\": \"T\", \"state\": \"present\", \"description\": \"2nd letter, T, present in another position\"}, {\"letter\": \"E\", \"state\": \"present\", \"description\": \"3rd letter, E, present in another position\"}, {\"letter\": \"R\", \"state\": \"correct\", \"description\": \"4th letter, R, correct\"}, {\"letter\": \"N\", \"state\": \"present\", \"description\": \"5th letter, N, present in another position\"}]}, \"row-3\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-4\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-5\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-6\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}}"
+    },
+    {
+      "thinking": "**Results from STERN:**\n- \u2b1b S \u2014 absent\n- \ud83d\udfe8 T \u2014 present, not position 2\n- \ud83d\udfe8 E \u2014 present, not position 3\n- \ud83d\udfe9 R \u2014 **correct at position 4!**\n- \ud83d\udfe8 N \u2014 present, not positions 4 or 5\n\n**Running constraints:**\n- Position 4 = R \u2713\n- Letters in word: R, T, E, N\n- E: not in positions 3 or 5 \u2192 must be in position 1 or 2\n- N: not in positions 4 or 5 \u2192 must be in position 1, 2, or 3\n- T: not in position 2 \u2192 must be in position 1, 3, or 5\n- Absent: C, A, S\n\n**Pattern: _ _ _ R _**\n\n\ud83d\udca1 **ENTRY** fits perfectly: E(1), N(2), T(3), R(4), Y(5) \u2014 all constraints satisfied!",
+      "guess": "ENTRY",
+      "result": "{\"guess\": \"entry\", \"response\": \"Correct guess - Impressive\"}",
+      "result_details": null
+    }
+  ],
+  "usage": {
+    "total_cost_usd": 0.16845255,
+    "duration_ms": 79847,
+    "num_turns": 8,
+    "tokens": {
+      "input_tokens": 16,
+      "cache_creation_input_tokens": 15865,
+      "cache_read_input_tokens": 150586,
+      "output_tokens": 4249,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 15865,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 3,
+          "output_tokens": 283,
+          "cache_read_input_tokens": 23389,
+          "cache_creation_input_tokens": 1705,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 1705
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

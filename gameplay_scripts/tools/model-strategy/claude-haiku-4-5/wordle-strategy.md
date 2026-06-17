@@ -33,6 +33,19 @@ Valid letter states after a guess are:
 - When a letter is `present`, include it in every subsequent guess — but not in any position it has already been ruled out of
 - When a letter is `correct`, keep it in that exact position in every subsequent guess
 
+### Positional Elimination of Yellow Letters
+
+Once a yellow letter has been ruled out of enough positions, it may have only one valid slot remaining — at which point it is effectively confirmed, just like a green. Check for this after every guess:
+
+1. List the positions where the yellow letter is still allowed (not excluded by any `present` result, and not occupied by a `correct` letter)
+2. If exactly one position remains, treat that letter as confirmed in that slot
+3. Use this deduced placement immediately in the next guess — do not waste a turn testing it when it can be inferred
+
+**Example from practice:** After SLATE (T🟡 pos 4, E🟡 pos 5) and INTER (N✅ pos 2, T✅ pos 3, E🟡 pos 4, R🟡 pos 5):
+- E is ruled out of pos 4 (INTER) and pos 5 (SLATE); pos 2 and 3 are confirmed N/T — so E **must** be in pos 1
+- R is ruled out of pos 5 (INTER); pos 1 is E, pos 2 is N, pos 3 is T — so R **must** be in pos 4
+- Both yellows were fully resolved without spending another guess, directly enabling the 3-guess solve ENTRY
+
 ## Pattern-Aware Exploration
 
 When a strong pattern is known early (e.g. 2+ correct positions after guess 1):
