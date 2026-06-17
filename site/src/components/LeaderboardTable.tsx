@@ -1,16 +1,27 @@
 import type { Game } from "../data/types";
+import type { ModelAverage } from "../lib/leaderboard";
 import { RankTile } from "./Tile";
-import { formatCost, formatDuration, formatResult } from "../lib/leaderboard";
+import {
+  formatAvgPlays,
+  formatCost,
+  formatResult,
+  formatSuccessRate,
+} from "../lib/leaderboard";
 
 const ROW_GRID =
-  "grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:grid-cols-[auto_1fr_5rem_4.5rem_5rem]";
+  "grid grid-cols-[1fr_auto] items-center gap-4 sm:grid-cols-[1fr_auto_1fr]";
+
+const STATS_GRID =
+  "hidden sm:grid sm:grid-cols-[6.5rem_5rem_4.5rem] sm:justify-end sm:gap-4";
 
 export default function LeaderboardTable({
   games,
+  averages,
   selectedId,
   onSelect,
 }: {
   games: Game[];
+  averages: Record<string, ModelAverage>;
   selectedId: number | null;
   onSelect: (id: number) => void;
 }) {
@@ -28,16 +39,22 @@ export default function LeaderboardTable({
       <div
         className={`${ROW_GRID} px-4 pb-1 text-[11px] font-bold uppercase tracking-widest text-muted`}
       >
-        <span>Rank</span>
-        <span>Model</span>
-        <span className="hidden text-right sm:block">Result</span>
-        <span className="hidden text-right sm:block">Cost</span>
-        <span className="hidden text-right sm:block">Time</span>
+        <div className="flex items-center gap-4">
+          <span className="w-10 text-center sm:w-11">Rank</span>
+          <span>Model</span>
+        </div>
+        <span className="hidden text-center sm:block">Result</span>
+        <div className={STATS_GRID}>
+          <span className="text-center">Avg guesses</span>
+          <span className="text-center">Avg cost</span>
+          <span className="text-center">Win rate</span>
+        </div>
       </div>
 
       {games.map((game, i) => {
         const selected = game.id === selectedId;
         const top = i === 0;
+        const avg = averages[game.model];
         return (
           <button
             key={game.id}
@@ -51,26 +68,31 @@ export default function LeaderboardTable({
             }`}
             style={{ animationDelay: `${i * 60}ms` }}
           >
-            <RankTile rank={i + 1} top={top} />
-
-            <div className="min-w-0">
-              <div className="truncate font-display text-[17px] font-bold leading-tight">
-                {game.modelLabel}
-              </div>
-              <div className="text-xs font-medium text-muted">
-                {game.provider}
+            {/* Rank + model */}
+            <div className="flex min-w-0 items-center gap-4">
+              <RankTile rank={i + 1} top={top} />
+              <div className="min-w-0">
+                <div className="truncate font-display text-[17px] font-bold leading-tight">
+                  {game.modelLabel}
+                </div>
+                <div className="text-xs font-medium text-muted">
+                  {game.provider}
+                </div>
               </div>
             </div>
 
-            {/* Compact result for mobile */}
+            {/* Compact summary for mobile */}
             <div className="text-right sm:hidden">
               <div className="font-bold tabular-nums">
                 {formatResult(game)}
               </div>
-              <div className="text-xs text-muted">{formatCost(game.costUsd)}</div>
+              <div className="text-xs text-muted">
+                {avg ? formatSuccessRate(avg.successRate) : "—"} success
+              </div>
             </div>
 
-            <div className="hidden text-right sm:block">
+            {/* Result (centred) */}
+            <div className="hidden text-center sm:block">
               <span
                 className={`font-bold tabular-nums ${
                   game.win ? "text-ink" : "text-absent"
@@ -79,11 +101,18 @@ export default function LeaderboardTable({
                 {formatResult(game)}
               </span>
             </div>
-            <div className="hidden text-right font-semibold tabular-nums text-ink sm:block">
-              {formatCost(game.costUsd)}
-            </div>
-            <div className="hidden text-right font-medium tabular-nums text-muted sm:block">
-              {formatDuration(game.durationMs)}
+
+            {/* Average stats */}
+            <div className={STATS_GRID}>
+              <div className="text-center font-medium tabular-nums text-muted">
+                {avg ? formatAvgPlays(avg.avgPlays) : "—"}
+              </div>
+              <div className="text-center font-medium tabular-nums text-muted">
+                {avg ? formatCost(avg.avgCost) : "—"}
+              </div>
+              <div className="text-center font-medium tabular-nums text-muted">
+                {avg ? formatSuccessRate(avg.successRate) : "—"}
+              </div>
             </div>
           </button>
         );

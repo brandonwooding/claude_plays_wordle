@@ -2,6 +2,7 @@
 .venv
 __pycache__
 .claude
+.playwright-mcp
 
 node_modules
 dist

@@ -1,8 +1,14 @@
 import { useMemo, useState } from "react";
 import gamesData from "../data/games.json";
 import type { GamesData } from "../data/types";
-import { allDates, gamesForDate, formatDate } from "../lib/leaderboard";
-import DatePicker from "../components/DatePicker";
+import {
+  allDates,
+  gamesForDate,
+  modelAverages,
+  formatDate,
+  todayISO,
+} from "../lib/leaderboard";
+import HistoryMenu from "../components/HistoryMenu";
 import LeaderboardTable from "../components/LeaderboardTable";
 import RunDetail from "../components/RunDetail";
 
@@ -10,8 +16,10 @@ const data = gamesData as unknown as GamesData;
 
 export default function Leaderboard() {
   const dates = useMemo(() => allDates(data.games), []);
+  const averages = useMemo(() => modelAverages(data.games), []);
   const [date, setDate] = useState(dates[0] ?? "");
 
+  const isToday = date === todayISO();
   const ranked = useMemo(() => gamesForDate(data.games, date), [date]);
   const [selectedId, setSelectedId] = useState<number | null>(
     ranked[0]?.id ?? null,
@@ -37,33 +45,42 @@ export default function Leaderboard() {
   return (
     <>
       {/* Hero */}
-      <section className="pb-10 pt-14 text-center sm:pt-20">
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-correct">
-          Daily AI Benchmark
-        </p>
-        <h1 className="font-display text-4xl font-black leading-[1.05] tracking-tight sm:text-6xl">
-          LLMs Play <span className="italic">Wordle</span>
+      <section className="pb-8 pt-10 text-center sm:pt-12">
+        <h1 className="font-display text-3xl font-black leading-[1.05] tracking-tight sm:text-5xl">
+          Can you beat Claude at <span className="italic">Wordle</span>?
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-          Every day, language models take on the day's Wordle. Here's who guessed
-          sharpest — and how they reasoned their way there.
+        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+          A benchmark tracking the performance of LLM agents on Wordle daily —
+          who did the best and what were they thinking.
         </p>
+        {/* Hero footer: sponsor */}
+        <div className="mx-auto mt-7 max-w-xl border-t border-line pt-4">
+          <p className="text-xs font-bold uppercase tracking-[0.1em] text-muted">
+            Today's tokens sponsored by
+          </p>
+          <p className="mt-1 text-sm font-semibold text-ink">Brandon Wooding</p>
+        </div>
       </section>
 
       {/* Leaderboard */}
       <section>
-        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between">
           <div>
-            <h2 className="font-display text-2xl font-bold">Leaderboard</h2>
+            <h2 className="font-display text-2xl font-bold">
+              {isToday ? "Leaderboard (Today)" : "Leaderboard"}
+            </h2>
             <p className="text-sm text-muted">
-              Standings for {formatDate(date)}
+              {isToday
+                ? "Today's standings · all-time averages per model"
+                : `Standings for ${formatDate(date)}`}
             </p>
           </div>
-          <DatePicker dates={dates} value={date} onChange={changeDate} />
+          <HistoryMenu dates={dates} value={date} onChange={changeDate} />
         </div>
 
         <LeaderboardTable
           games={ranked}
+          averages={averages}
           selectedId={selected?.id ?? null}
           onSelect={setSelectedId}
         />

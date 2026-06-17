@@ -1,0 +1,61 @@
+{
+  "game_outcome": {
+    "win": true,
+    "attempts": 3
+  },
+  "plays": [
+    {
+      "thinking": "Fresh board! Let me start with a strong opener. I'll use **CRANE** \u2014 it covers common vowels (A, E) and high-frequency consonants (C, R, N).",
+      "guess": "CRANE",
+      "result": "{\"guess\": \"crane\", \"response\": \"Play accepted\"}",
+      "result_details": "{\"row-1\": {\"guess\": \"CRANE\", \"guess_outcome\": \"incorrect\", \"letter_tiles\": [{\"letter\": \"C\", \"state\": \"absent\", \"description\": \"1st letter, C, absent\"}, {\"letter\": \"R\", \"state\": \"absent\", \"description\": \"2nd letter, R, absent\"}, {\"letter\": \"A\", \"state\": \"absent\", \"description\": \"3rd letter, A, absent\"}, {\"letter\": \"N\", \"state\": \"present\", \"description\": \"4th letter, N, present in another position\"}, {\"letter\": \"E\", \"state\": \"present\", \"description\": \"5th letter, E, present in another position\"}]}, \"row-2\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-3\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-4\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-5\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-6\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}}"
+    },
+    {
+      "thinking": "Good info from guess 1:\n- \u274c Absent: C, R, A\n- \ud83d\udfe1 Present (wrong position): N (not pos 4), E (not pos 5)\n\nFor guess 2, I need a word with N (not pos 4) and E (not pos 5), no C/R/A, while testing fresh high-frequency letters. **TINES** fits perfectly \u2014 N in pos 3, E in pos 4, and tests T, I, S.",
+      "guess": "TINES",
+      "result": "{\"guess\": \"tines\", \"response\": \"Play accepted\"}",
+      "result_details": "{\"row-1\": {\"guess\": \"CRANE\", \"guess_outcome\": \"incorrect\", \"letter_tiles\": [{\"letter\": \"C\", \"state\": \"absent\", \"description\": \"1st letter, C, absent\"}, {\"letter\": \"R\", \"state\": \"absent\", \"description\": \"2nd letter, R, absent\"}, {\"letter\": \"A\", \"state\": \"absent\", \"description\": \"3rd letter, A, absent\"}, {\"letter\": \"N\", \"state\": \"present\", \"description\": \"4th letter, N, present in another position\"}, {\"letter\": \"E\", \"state\": \"present\", \"description\": \"5th letter, E, present in another position\"}]}, \"row-2\": {\"guess\": \"TINES\", \"guess_outcome\": \"partially correct\", \"letter_tiles\": [{\"letter\": \"T\", \"state\": \"correct\", \"description\": \"1st letter, T, correct\"}, {\"letter\": \"I\", \"state\": \"absent\", \"description\": \"2nd letter, I, absent\"}, {\"letter\": \"N\", \"state\": \"present\", \"description\": \"3rd letter, N, present in another position\"}, {\"letter\": \"E\", \"state\": \"correct\", \"description\": \"4th letter, E, correct\"}, {\"letter\": \"S\", \"state\": \"absent\", \"description\": \"5th letter, S, absent\"}]}, \"row-3\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-4\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-5\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}, \"row-6\": {\"guess\": null, \"guess_outcome\": null, \"letter_tiles\": [{\"letter\": \"\", \"state\": \"empty\", \"description\": \"1st letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"2nd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"3rd letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"4th letter, empty\"}, {\"letter\": \"\", \"state\": \"empty\", \"description\": \"5th letter, empty\"}]}}"
+    },
+    {
+      "thinking": "Excellent progress! Current state:\n- \ud83d\udfe9 T in position 1 (locked!)\n- \ud83d\udfe9 E in position 4 (locked!)\n- \ud83d\udfe1 N is in the word but NOT positions 3 or 4 \u2192 must be position 2 or 5\n- \u274c Absent: C, R, A, I, S\n\nPattern: **T _ _ E _** with N somewhere in pos 2 or 5.\n\nSince TN at the start is very rare in English, N is almost certainly in position 5 \u2192 **T _ _ E N**. The word **TOKEN** fits perfectly \u2014 no absent letters, and tests fresh letters O and K!",
+      "guess": "TOKEN",
+      "result": "{\"guess\": \"token\", \"response\": \"Correct guess - Impressive\"}",
+      "result_details": null
+    }
+  ],
+  "usage": {
+    "total_cost_usd": 0.1760916,
+    "duration_ms": 96628,
+    "num_turns": 8,
+    "tokens": {
+      "input_tokens": 16,
+      "cache_creation_input_tokens": 16098,
+      "cache_read_input_tokens": 147437,
+      "output_tokens": 4763,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 16098,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 3,
+          "output_tokens": 244,
+          "cache_read_input_tokens": 22763,
+          "cache_creation_input_tokens": 2564,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 2564
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

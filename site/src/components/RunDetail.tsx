@@ -1,5 +1,6 @@
 import type { Game } from "../data/types";
 import GameBoard from "./GameBoard";
+import Markdown from "./Markdown";
 import { formatCost, formatDuration, formatResult } from "../lib/leaderboard";
 
 function Stat({ label, value }: { label: string; value: string }) {
@@ -78,9 +79,7 @@ export default function RunDetail({
             <h4 className="mb-1.5 text-[11px] font-bold uppercase tracking-widest text-muted">
               Reflection
             </h4>
-            <p className="text-sm leading-relaxed text-ink/80">
-              {game.reflection}
-            </p>
+            <Markdown className="text-ink/80">{game.reflection}</Markdown>
           </div>
         )}
       </div>
