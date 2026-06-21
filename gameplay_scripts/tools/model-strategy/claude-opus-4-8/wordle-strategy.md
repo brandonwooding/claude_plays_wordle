@@ -62,6 +62,15 @@ Switch to guessing the most likely answer directly when:
 
 At this point exploration has diminishing returns and every remaining guess should be a real attempt.
 
+## Double Letters in the Target Word
+
+Wordle answers can contain **repeated letters** (e.g., ALIBI has I at positions 3 and 5; SPEED has E at positions 2 and 3). This creates two traps to avoid:
+
+1. **Don't assume 5 unique letters.** When the candidate pool is small and no remaining word fits the constraints with unique letters, consider words where a known-present letter appears more than once. A "present" result for a letter only confirms *at least one* occurrence — there may be more.
+2. **An "absent" result applies only to extra copies.** If you guess a letter twice and one is absent, the word contains exactly one of that letter (in the correct position). Don't eliminate the letter entirely.
+
+**Practical rule:** When you have strong constraints (2+ confirmed positions + a present letter with few open slots) and are building your Phase 2 attempt, explicitly consider whether the known letters could repeat before discarding a candidate.
+
 ## General Principles
 
 - Prioritise covering the five vowels (A, E, I, O, U) across the first two or three guesses

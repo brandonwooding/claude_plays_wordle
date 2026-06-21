@@ -13,7 +13,9 @@
 - **Guess 2:** Prefer a word that avoids all absent letters while testing fresh high-frequency letters (especially untested vowels) in the remaining unknown slots — this narrows the search space quickly without wasting a guess
 - **Reposition ALL yellows in guess 2:** When guess 1 yields multiple yellow letters, choose guess 2 so that every yellow letter is moved to a new, valid position in one shot. A guess that repositions only some yellows leaves partial positional ambiguity; repositioning all of them in one word maximises information per guess. For example, if CRANE yields R🟨 N🟨 E🟨, a word like STERN places all three in new positions simultaneously while also testing fresh consonants.
 - After the first two guesses, mentally enumerate remaining candidate words. If the constraints (greens + yellow position rules + absents) point to a single common word, guess it immediately — do not spend another exploratory turn when the answer may already be determined.
+- **When 2–3 candidates remain, list them all explicitly and pick the most commonly used English word among them.** Do not default to whichever candidate came to mind first — a moment of enumeration can surface a higher-frequency word and slightly improve your odds of solving in the fewest guesses.
 - After the first two guesses, minimise purely exploratory plays; shift toward candidate words that could actually be the answer
+- **Re-enumerate candidates after every guess from guess 2 onwards** (not just after guesses 1–2). When 10+ letters are eliminated and positional constraints are tight, the candidate pool can collapse to 2–4 words by guess 3 — catch this early rather than spending another guess on positional probing
 
 ## Consonant Frequency Prioritisation
 
