@@ -57,4 +57,25 @@ When a strong pattern is known early (e.g. 2+ correct positions after guess 1):
 
 - If the board state does not update after a guess (rows remain empty or show unexpected states like `tbd`), treat all prior guesses as having produced **no usable information**
 - In this situation, continue with guesses that maximise new letter coverage using the most common English letters not yet tested, rather than guessing based on phantom constraints
-- Do not guess words that reuse letters from previous guesses when the outcome of those guesses is unknown
+- **Do not guess words that reuse letters from previous guesses when the outcome of those guesses is unknown**
+
+### Letter Tracking is Critical in Broken-Feedback Mode
+
+When feedback is broken, letter tracking errors are easy to make and costly. Before committing to any guess, perform this explicit two-step check:
+
+1. **Write out a complete list of every letter used across all previous guesses.** For example, after SLATE + RHINO: used = {S, L, A, T, E, R, H, I, N, O}. Derive this list fresh each time — do not rely on memory.
+2. **Check each letter in your proposed word against that set.** If any proposed letter appears in the used set, reject the word immediately and find a replacement before guessing.
+
+This check is essential. A real failure: after SLATE (S,L,A,T,E) and RHINO (R,H,I,N,O), the words BUNCH (reuses **N**, **H**) and WORDY (reuses **O**, **R**) were both played — violating the no-reuse rule and wasting two turns that should each have covered 5 entirely fresh letters.
+
+### Pre-Planned Word Sequences for Broken Feedback
+
+Constructing a non-overlapping word sequence on the fly under broken feedback is error-prone. Use this reliable 3-word opening chain that covers 15 distinct letters with zero overlap:
+
+| Guess | Word  | New letters covered |
+|-------|-------|---------------------|
+| 1     | SLATE | S, L, A, T, E       |
+| 2     | RHINO | R, H, I, N, O       |
+| 3     | BUMPY | B, U, M, P, Y       |
+
+After these three words, 15 letters are covered. For guess 4 onwards, use the explicit tracking step above with the remaining untested letters (C, D, F, G, J, K, Q, V, W, X, Z) to construct a valid fourth word — verifying letter-by-letter that nothing overlaps with the 15 already used.

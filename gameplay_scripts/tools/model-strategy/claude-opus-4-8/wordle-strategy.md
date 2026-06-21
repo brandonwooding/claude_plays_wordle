@@ -5,6 +5,21 @@
 - CRANE is a strong opener: hits A, E, and three common consonants
 - Avoid repeating letters in the opening guess — wasted coverage
 
+## Handling "tbd" / Unresolved Feedback
+
+Occasionally, letter tile states may remain `"tbd"` (to-be-determined) or guesses may appear not to have registered on the board display. This is a feedback rendering issue, not a game state issue — **the guess was recorded**.
+
+**Critical rules when feedback is unresolved:**
+
+1. **Never replay a word that has already been guessed.** Repeating a word yields zero new information and burns a guess — this is one of the worst errors possible in Wordle.
+2. **Do not wait for feedback to "arrive" by making another guess.** The display lag will not resolve by re-guessing.
+3. **Proceed with the pre-planned exploration sequence.** If you cannot read feedback from guess N, treat it as having produced no usable information and make the next best exploration guess from scratch — introduce the highest-value untested letters (e.g., after CRANE, play SLOTH; after SLOTH, play DUMPY).
+4. **Track what has already been submitted** even if the board doesn't show it, and exclude those words from future guesses.
+
+If multiple consecutive guesses return "tbd" with no resolution, assume the game session is broken and continue by covering maximum new letter territory each turn with a fresh word.
+
+---
+
 ## Handling Feedback
 
 - **Absent letter:** Never use it again in any subsequent guess
@@ -53,4 +68,18 @@ At this point exploration has diminishing returns and every remaining guess shou
 - When the pattern is highly constrained, mentally enumerate remaining candidates before guessing and pick the most common/likely one
 - Avoid guessing words that are valid only under some assumptions — if you already have enough information, commit to the answer
 - Track eliminated letters carefully; reusing an absent letter is a wasted guess
+- **Never repeat a word that has already been submitted** — this is always wrong regardless of board display state; a repeated guess yields zero new information
 - A 3-guess solve is achievable when guess 2 aggressively repositions present letters — this collapses the candidate space faster than a pure letter-discovery approach
+
+## Planned Exploration Sequence (fallback when feedback is unavailable)
+
+If board feedback is completely unavailable across multiple guesses, use this pre-planned sequence to maximise letter coverage:
+
+| Guess | Word  | Letters covered                                   |
+|-------|-------|---------------------------------------------------|
+| 1     | CRANE | C, R, A, N, E                                     |
+| 2     | SLOTH | S, L, O, T, H                                     |
+| 3     | DUMPY | D, U, M, P, Y                                     |
+| 4     | FIXED | F, I, X, E, D (pivot to real attempt if any feedback exists) |
+
+These four guesses cover 18 unique letters, leaving only J, K, Q, V, W, Z untested — the rarest letters in English. This sequence is the safest fallback when the feedback system is unreliable.

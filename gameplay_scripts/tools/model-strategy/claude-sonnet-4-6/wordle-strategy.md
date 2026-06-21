@@ -54,8 +54,11 @@ If the board state appears frozen (e.g., rows 2+ still show as empty after accep
 
 1. **Do not assume "tbd" = absent** — this will compound errors across every subsequent guess
 2. **Recognise the failure mode early** — if row 2 still shows empty after your second guess is accepted, the board rendering is broken
-3. **Shift to common-word mode:** Without reliable feedback, pivot from pure letter-coverage/exploration to guessing high-frequency, plausible 5-letter answer words (LIGHT, PROXY, FOUND, etc.) — you maximise the chance of a lucky solve
+3. **Shift to common-word mode:** Without reliable feedback, pivot from pure letter-coverage/exploration to guessing high-frequency, plausible 5-letter answer words (LIGHT, FOUND, PLANT, DRIVE, WORLD, THICK, FLAME, BROWN, KNIFE, GRACE, etc.) — you maximise the chance of a lucky solve
 4. **Do not keep repeating alphabet-coverage guesses** past guess 3 if you have received no usable feedback — the marginal value of each new letter drops sharply when you cannot act on the results
+5. **Use only words with 5 unique letters** — in blackout mode, every slot must test a distinct letter. Words with internal repeats waste precious coverage (e.g. VIVID tests only V, I, D across 5 slots; FOGGY tests only F, O, G, Y across 5 slots). Before committing a guess, verify that all 5 letters in the word are different from each other
+6. **Apply consonant frequency priorities** — even in blackout mode, prefer words built from common consonants (T, N, S, R, H, D, L, M, F, G) over those dominated by rare ones (J, K, V, W, X, Q, Z). A word like THINK or DRAFT gives far better odds of a lucky solve than JERKY or WALTZ
+7. **Never reuse a letter already played** — maintain a cumulative list of all letters played across every guess in the current game and exclude them entirely when selecting blackout words, regardless of colour feedback received. Reusing a letter (e.g. guessing FOGGY after SLOTH, which already tested O) wastes a slot with no new information
 
 ## General Guidance
 
